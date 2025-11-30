@@ -7,7 +7,7 @@ const __dirname = path.dirname(__filename);
 
 // Target file paths
 const EXISTING_PROMPTS_PATH = path.join(__dirname, '../extension/prompts.json');
-const TARGET_DAILY_JSON_PATH = path.join(__dirname, '../extension/daily-add.json');
+const TARGET_DAILY_JSON_PATH = path.join(__dirname, '../config/daily-add.json');
 
 // Define data source
 const SOURCE = {
@@ -160,7 +160,7 @@ async function main() {
         console.error(`❌ Failed to fetch ${SOURCE.name}:`, error.message);
     }
 
-    // 4. Write to extension/daily-add.json
+    // 4. Write to config/daily-add.json
     fs.writeFileSync(TARGET_DAILY_JSON_PATH, JSON.stringify(newPrompts, null, 4));
     
     console.log('\n🎉 ===========================================');

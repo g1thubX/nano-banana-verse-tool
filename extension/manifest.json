@@ -2,7 +2,7 @@
     "manifest_version": 3,
     "name": "Banana verse",
     "version": "1.5.0",
-    "description": "Prompts verse is ALL you 🍌 need",
+    "description": "Banana 🍌 Verse Prompts is ALL you need",
     "icons": {
         "16": "icon16.png",
         "48": "icon48.png",
@@ -40,8 +40,6 @@
     "web_accessible_resources": [
         {
             "resources": [
-                "prompts.json",
-                "daily-add.json",
                 "config.json"
             ],
             "matches": [
