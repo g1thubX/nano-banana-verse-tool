@@ -317,7 +317,7 @@ const App: React.FC = () => {
             </div>
             <div className="flex gap-6 text-sm text-zinc-500">
                <button onClick={() => setView('privacy')} className="hover:text-zinc-900 transition-colors text-left">
-                 隐私政策
+                 隐 私 政 策
                </button>
                <a href="https://github.com/g1thubX/nano-banana-verse-tool" className="hover:text-zinc-900 transition-colors">GitHub</a>
             </div>
