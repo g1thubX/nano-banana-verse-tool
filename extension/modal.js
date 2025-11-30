@@ -1,5 +1,3 @@
-
-
 class BananaModal {
     constructor(adapter) {
         this.adapter = adapter;
@@ -258,6 +256,19 @@ class BananaModal {
     createModal() {
         const colors = this.adapter.getThemeColors();
         const mobile = this.isMobile();
+
+        // Add keyframes for spinner if not already present
+        if (!document.getElementById('banana-spin-style')) {
+            const style = document.createElement('style');
+            style.id = 'banana-spin-style';
+            style.textContent = `
+                @keyframes banana-spin {
+                    0% { transform: translate(-50%, -50%) rotate(0deg); }
+                    100% { transform: translate(-50%, -50%) rotate(360deg); }
+                }
+            `;
+            document.head.appendChild(style);
+        }
 
         const modalElement = document.createElement('div');
         modalElement.id = 'prompts-modal';
@@ -875,6 +886,80 @@ class BananaModal {
             () => this.changePage(1)
         ));
 
+        // --- Page Jump Input ---
+        const jumpInputWrapper = document.createElement('div');
+        jumpInputWrapper.style.cssText = 'display: flex; align-items: center; margin-left: 12px; gap: 4px;';
+        
+        const jumpInput = document.createElement('input');
+        jumpInput.type = 'number';
+        jumpInput.min = '1';
+        jumpInput.max = totalPages.toString();
+        jumpInput.placeholder = '跳';
+        
+        // Styling the input
+        const inputBg = this.adapter.getCurrentTheme() === 'dark' ? 'rgba(255,255,255,0.1)' : '#f4f4f5';
+        jumpInput.style.cssText = `
+            width: 40px; 
+            height: 32px; 
+            border: 1px solid transparent; 
+            border-radius: 8px; 
+            background: ${inputBg}; 
+            color: ${colors.text}; 
+            font-size: 13px; 
+            text-align: center; 
+            outline: none;
+            transition: all 0.2s;
+            -moz-appearance: textfield;
+        `;
+        
+        // Remove spinner arrows for webkit
+        const style = document.createElement('style');
+        style.textContent = `
+            #jump-page-input::-webkit-outer-spin-button,
+            #jump-page-input::-webkit-inner-spin-button {
+                -webkit-appearance: none;
+                margin: 0;
+            }
+        `;
+        jumpInput.id = 'jump-page-input';
+        jumpInputWrapper.appendChild(style);
+
+        jumpInput.addEventListener('focus', () => {
+             jumpInput.style.borderColor = colors.primary;
+             jumpInput.style.background = this.adapter.getCurrentTheme() === 'dark' ? 'rgba(0,0,0,0.3)' : '#fff';
+        });
+
+        jumpInput.addEventListener('blur', () => {
+             jumpInput.style.borderColor = 'transparent';
+             jumpInput.style.background = inputBg;
+        });
+
+        const handleJump = () => {
+            const val = parseInt(jumpInput.value, 10);
+            if (!isNaN(val) && val >= 1 && val <= totalPages) {
+                this.setPage(val);
+            } else {
+                jumpInput.value = ''; // Clear invalid input
+            }
+        };
+
+        jumpInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                handleJump();
+                jumpInput.blur();
+            }
+            // Prevent page nav keys from triggering global listeners
+            e.stopPropagation(); 
+        });
+        
+        jumpInputWrapper.appendChild(jumpInput);
+        
+        // Optional "Go" button or just rely on Enter? Let's stick to Enter for minimalism, 
+        // but add a small tooltip/hint visually or just rely on convention.
+
+        controlsWrapper.appendChild(jumpInputWrapper);
+
+
         const announcementSection = this.createAnnouncementSection(colors, mobile);
 
         if (mobile) {
@@ -1002,18 +1087,51 @@ class BananaModal {
             : (prompt.preview ? [prompt.preview] : []);
         
         const imgWrapper = document.createElement('div');
-        imgWrapper.style.cssText = `position: relative; width: 100%; aspect-ratio: 16/10; overflow: hidden; background: ${colors.surfaceHover};`;
+        imgWrapper.style.cssText = `position: relative; width: 100%; aspect-ratio: 16/10; overflow: hidden; background: ${colors.surfaceHover}; display: flex; align-items: center; justify-content: center;`;
         
-        // Image rendering logic
+        // --- Image rendering logic with Loader ---
+        
+        // Helper to create spinner
+        const createSpinner = () => {
+             const spinner = document.createElement('div');
+             spinner.className = 'banana-card-spinner';
+             spinner.style.cssText = `
+                position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+                width: 24px; height: 24px;
+                border: 2px solid rgba(127,127,127,0.2);
+                border-top: 2px solid ${colors.textSecondary};
+                border-radius: 50%;
+                animation: banana-spin 0.8s linear infinite;
+                z-index: 1;
+             `;
+             return spinner;
+        };
+
         if (images.length <= 1) {
+            const spinner = createSpinner();
+            imgWrapper.appendChild(spinner);
+
             const img = document.createElement('img');
-            // USE THE NEW SAFE LOADER
-            BananaUtils.setSafeImageSrc(img, images[0] || 'https://www.gstatic.com/lamda/images/gemini_sparkle_v002_d4735304ff6292a690345.svg');
-            
+            img.style.cssText = `width: 100%; height: 100%; object-fit: cover; transition: opacity 0.3s ease, transform 0.5s ease; opacity: 0;`;
             img.alt = prompt.title;
             img.loading = 'lazy';
             img.referrerPolicy = "no-referrer";
-            img.style.cssText = `width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease;`;
+            
+            // Listener to remove spinner and fade in
+            img.addEventListener('load', () => {
+                if(imgWrapper.contains(spinner)) imgWrapper.removeChild(spinner);
+                img.style.opacity = '1';
+            });
+            
+            img.addEventListener('error', () => {
+                 if(imgWrapper.contains(spinner)) imgWrapper.removeChild(spinner);
+                 // Keep opacity 0 or show fallback is handled by utils, 
+                 // but utils sets src, here we just want to ensure spinner is gone.
+                 img.style.opacity = '0.5'; // Show fallback if set by utils
+            });
+
+            // USE THE NEW SAFE LOADER
+            BananaUtils.setSafeImageSrc(img, images[0] || 'https://www.gstatic.com/lamda/images/gemini_sparkle_v002_d4735304ff6292a690345.svg');
             
             if(!mobile) {
                 card.addEventListener('mouseenter', () => img.style.transform = 'scale(1.08)');
@@ -1038,17 +1156,38 @@ class BananaModal {
             `;
             
             for (let i = 0; i < displayCount; i++) {
+                const subWrapper = document.createElement('div');
+                subWrapper.style.cssText = `position: relative; width: 100%; height: 100%; overflow: hidden; background: ${colors.surfaceHover};`;
+                
+                const spinner = createSpinner();
+                // Scale down spinner for small grids
+                spinner.style.width = '16px';
+                spinner.style.height = '16px';
+                spinner.style.borderWidth = '1.5px';
+                subWrapper.appendChild(spinner);
+
                 const subImg = document.createElement('img');
-                BananaUtils.setSafeImageSrc(subImg, images[i]);
+                subImg.style.cssText = `width: 100%; height: 100%; object-fit: cover; cursor: pointer; opacity: 0; transition: opacity 0.3s ease;`;
                 subImg.loading = 'lazy';
                 subImg.referrerPolicy = "no-referrer";
-                subImg.style.cssText = `width: 100%; height: 100%; object-fit: cover; cursor: pointer;`;
+                
+                subImg.addEventListener('load', () => {
+                     if(subWrapper.contains(spinner)) subWrapper.removeChild(spinner);
+                     subImg.style.opacity = '1';
+                });
+                 subImg.addEventListener('error', () => {
+                     if(subWrapper.contains(spinner)) subWrapper.removeChild(spinner);
+                     subImg.style.opacity = '0.5'; 
+                });
+
+                BananaUtils.setSafeImageSrc(subImg, images[i]);
                 
                 subImg.onclick = (e) => {
                     e.stopPropagation();
                     this.gallery.show(images, i);
                 };
-                gridContainer.appendChild(subImg);
+                subWrapper.appendChild(subImg);
+                gridContainer.appendChild(subWrapper);
             }
             imgWrapper.appendChild(gridContainer);
         }
@@ -1062,6 +1201,7 @@ class BananaModal {
             opacity: 0; transition: opacity 0.2s ease;
             backdrop-filter: blur(2px);
             pointer-events: none; /* Let clicks pass through to grid items if needed, but we handle button clicks specifically */
+            z-index: 5;
         `;
         // Allow button clicks
         const useBtn = document.createElement('button');
