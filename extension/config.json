@@ -1,0 +1,17 @@
+{
+    "selectors": {
+        "aistudio": {
+            "promptInput": "ms-prompt-input-wrapper textarea",
+            "insertButton": "ms-run-button button"
+        },
+        "gemini": {
+            "promptInput": "div.ql-editor[contenteditable=\"true\"]",
+            "insertButton": "button.toolbox-drawer-item-deselect-button:has(img.img-icon)"
+        }
+    },
+    "announcements": [
+        {
+            "content": "Gemini 审查过于严格，可能无法生成 NSFW，请尝试其他渠道，如 Gemini Enterprise"
+        }
+    ]
+}

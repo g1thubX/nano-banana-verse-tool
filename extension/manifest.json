@@ -1,0 +1,58 @@
+{
+    "manifest_version": 3,
+    "name": "Banana verse",
+    "version": "1.5.0",
+    "description": "Prompts verse is ALL you 🍌 need",
+    "icons": {
+        "16": "icon16.png",
+        "48": "icon48.png",
+        "128": "icon128.png"
+    },
+    "permissions": [
+        "storage",
+        "contextMenus"
+    ],
+    "host_permissions": [
+        "https://raw.githubusercontent.com/*"
+    ],
+    "action": {},
+    "background": {
+        "service_worker": "background.js"
+    },
+    "content_scripts": [
+        {
+            "matches": [
+                "<all_urls>"
+            ],
+            "js": [
+                "prompts.js",
+                "constants.js",
+                "utils.js",
+                "gallery.js",
+                "editor.js",
+                "modal.js",
+                "content.js"
+            ],
+            "run_at": "document_idle",
+            "all_frames": true
+        }
+    ],
+    "web_accessible_resources": [
+        {
+            "resources": [
+                "prompts.json",
+                "daily-add.json",
+                "config.json"
+            ],
+            "matches": [
+                "<all_urls>"
+            ]
+        }
+    ],
+    "browser_specific_settings": {
+        "gecko": {
+            "id": "nano-banana-verse-tool@yitiomin.io",
+            "strict_min_version": "109.0"
+        }
+    }
+}

@@ -1,0 +1,55 @@
+# .github/workflows/daily-task.yml
+
+name: Daily Fetch Task
+
+on:
+  schedule:
+    - cron: '0 1 * * *'
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    # 重要：给仓库写入权限
+    permissions:
+      contents: write
+
+    steps:
+      # 步骤 1: 检出仓库代码
+      # 注意：我们添加了 `token: ${{ secrets.GITHUB_TOKEN }}` 来允许推送
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      # 步骤 2: 设置 Node.js 环境
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      # 步骤 3: 执行你的脚本，它会生成 daily-add.json 文件
+      - name: Run daily fetch script
+        run: node tools/fetch-daily.mjs
+
+      # 步骤 4: (新增) 提交并推送更改
+      - name: Commit and push changes
+        run: |
+          # 检查是否有文件被修改或新增
+          if [ -n "$(git status --porcelain)" ]; then
+            # 配置 Git 用户信息
+            git config --local user.email "action@github.com"
+            git config --local user.name "GitHub Action"
+            
+            # 添加所有更改的文件
+            git add .
+            
+            # 创建提交
+            git commit -m "chore: auto-update daily-add.json"
+            
+            # 推送到远程仓库
+            git push
+          else
+            echo "No changes to commit."
+          fi

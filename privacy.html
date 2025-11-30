@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy Policy - Banana Verse</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            color: #18181b;
+            background-color: #FAFAFA;
+        }
+
+        h1 {
+            color: #18181b;
+            font-weight: 800;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        h2 {
+            color: #18181b;
+            border-bottom: 2px solid #F5D90A;
+            padding-bottom: 10px;
+            margin-top: 40px;
+            display: inline-block;
+        }
+
+        p, li {
+            color: #52525b;
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        li {
+            margin-bottom: 10px;
+        }
+
+        .last-updated {
+            color: #a1a1aa;
+            font-style: italic;
+            margin-bottom: 40px;
+            font-size: 0.9rem;
+        }
+        
+        a {
+            color: #CA8A04;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Privacy Policy</h1>
+    <div class="last-updated">Last updated: October 26, 2023</div>
+
+    <p><strong>Banana Verse</strong> ("we", "our", or "us") is committed to protecting your privacy. This Privacy Policy explains how our browser extension handles your information. In short: <strong>We do not collect, store, or transmit your personal data to any external servers.</strong></p>
+
+    <h2>1. Data Collection and Usage</h2>
+    <p>We believe in privacy by design. Here is how data is handled:</p>
+    <ul>
+        <li><strong>Local Storage:</strong> All your custom prompts, favorites, and settings are stored locally within your browser using the Chrome Storage API (`chrome.storage.local` and `chrome.storage.sync`). This data never leaves your device.</li>
+        <li><strong>No Tracking:</strong> We do not use cookies, analytics software, or third-party tracking services. We do not track your browsing history.</li>
+        <li><strong>No Personal Information:</strong> We do not collect names, email addresses, or any personally identifiable information.</li>
+        <li><strong>AI Interactions:</strong> We do not collect, store, or transmit the content of your conversations with AI platforms (Google Gemini, AI Studio). The extension only functions to <em>insert</em> text into the input field at your command.</li>
+    </ul>
+
+    <h2>2. Permissions Required</h2>
+    <p>To function correctly, the Banana Verse extension requires specific permissions, which are strictly limited to the extension's core features:</p>
+    <ul>
+        <li><strong>Storage:</strong> Used solely to save your preferences, custom prompts, and favorites locally on your device.</li>
+        <li><strong>Context Menus:</strong> Used to add the "Insert Banana Prompts" option to your browser's right-click menu for quick access.</li>
+        <li><strong>Host Permissions (<code>https://raw.githubusercontent.com/*</code>):</strong> Used exclusively to fetch the latest curated prompt library updates from our open-source GitHub repository. No user data is sent in this process.</li>
+        <li><strong>Content Scripts:</strong> Used to inject the floating "Banana" button and handle text insertion on supported platforms (<code>aistudio.google.com</code>, <code>gemini.google.com</code>). The extension only interacts with the webpage DOM to insert text when you explicitly trigger an action.</li>
+    </ul>
+
+    <h2>3. Data Sharing</h2>
+    <p>Since we do not collect any user data, we have no data to share.</p>
+    <ul>
+        <li>We do not sell, trade, or transfer data to third parties.</li>
+        <li>We do not have a backend server database containing user information.</li>
+    </ul>
+
+    <h2>4. Your Rights</h2>
+    <p>You have complete control over your data:</p>
+    <ul>
+        <li><strong>Access & Modification:</strong> You can view and edit your custom prompts directly within the extension interface.</li>
+        <li><strong>Deletion:</strong> You can delete custom prompts individually. Removing the extension from your browser will permanently delete all locally stored data associated with it.</li>
+    </ul>
+
+    <h2>5. Children's Privacy</h2>
+    <p>Our extension does not knowingly collect any information from children under the age of 13. It is a productivity tool designed for general audiences.</p>
+
+    <h2>6. Changes to This Policy</h2>
+    <p>We may update this Privacy Policy from time to time to reflect changes in our practices or for other operational, legal, or regulatory reasons. Any changes will be reflected on this page with an updated revision date.</p>
+
+    <h2>7. Contact Us</h2>
+    <p>If you have any questions about this Privacy Policy or the extension's practices, please verify the code on our open-source repository or contact us via GitHub:</p>
+    <p><a href="https://github.com/g1thubX/nano-banana-verse-tool" target="_blank">https://github.com/g1thubX/nano-banana-verse-tool</a></p>
+</body>
+
+</html>
