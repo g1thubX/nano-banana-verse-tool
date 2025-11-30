@@ -43,7 +43,7 @@ Banana Verse is designed to be private and secure:
 *   **No Server**: We do not have a backend server. We do not collect your personal data or prompts.
 *   **Open Source**: The code is open for inspection.
 
-For more details, please read our [Privacy Policy](privacy.html).
+For more details, please read our [Privacy Policy]([privacy.html](https://raw.githubusercontent.com/g1thubX/nano-banana-verse-tool/refs/heads/main/privacy.html)).
 
 ## 🤝 Contributing
 
