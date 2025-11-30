@@ -2,7 +2,9 @@
 
 **Banana Verse** is the ultimate prompt management extension for AI creators. Designed with a "Banana" philosophy (Simple on the outside, rich on the inside), it seamlessly integrates with Google AI Studio and Gemini to streamline your workflow.
 
-![Banana Verse Preview](ext.png)
+![Banana Verse Preview](add-prompt.png)
+![Banana Verse Preview](app-pan.png)
+
 
 ## ✨ Features
 
