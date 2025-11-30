@@ -9,6 +9,7 @@ import {
   Copy,
   Command
 } from 'lucide-react';
+import Privacy from './pages/Privacy';
 
 // --- Mock Data for Landing Page Gallery ---
 const LANDING_PROMPTS = [
@@ -52,12 +53,23 @@ const LANDING_PROMPTS = [
 
 const App: React.FC = () => {
   const [scrolled, setScrolled] = useState(false);
+  const [imageLoaded, setImageLoaded] = useState(false);
+  const [view, setView] = useState<'landing' | 'privacy'>('landing');
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  // Reset scroll when view changes
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [view]);
+
+  if (view === 'privacy') {
+    return <Privacy onBack={() => setView('landing')} />;
+  }
 
   return (
     <div className="min-h-screen relative bg-[#FDFDFD] text-zinc-900 selection:bg-yellow-200 selection:text-yellow-900 font-sans overflow-x-hidden">
@@ -69,16 +81,15 @@ const App: React.FC = () => {
       {/* --- Navbar --- */}
       <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${scrolled ? 'bg-white/80 backdrop-blur-xl border-b border-zinc-100 py-3' : 'bg-transparent py-6'}`}>
         <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
-          <div className="flex items-center gap-2 group cursor-pointer select-none">
+          <div 
+            className="flex items-center gap-2 group cursor-pointer select-none"
+            onClick={() => setView('landing')}
+          >
             <div className="text-2xl transition-transform duration-500 group-hover:rotate-12 filter drop-shadow-sm">🍌</div>
             <span className="font-bold text-lg tracking-tight text-zinc-900">Banana Verse</span>
           </div>
           
           <div className="hidden md:flex items-center gap-8">
-            {/* 
-              Removed unused navigation links:
-              功能特性, 灵感图库, 更新日志 
-            */}
             <a 
               href="https://github.com/g1thubX/nano-banana-verse-tool" 
               target="_blank"
@@ -146,17 +157,34 @@ const App: React.FC = () => {
                    </div>
                 </div>
 
-                {/* Actual Image */}
-                <div className="bg-zinc-50 rounded-b-xl overflow-hidden border border-zinc-100 min-h-[400px] flex items-center justify-center">
+                {/* Actual Image Container */}
+                <div className="bg-zinc-50 rounded-b-xl overflow-hidden border border-zinc-100 min-h-[400px] flex items-center justify-center relative">
+                    
+                    {/* Loading State */}
+                    {!imageLoaded && (
+                        <div className="absolute inset-0 flex flex-col items-center justify-center text-zinc-300/80 gap-3">
+                             <div className="w-8 h-8 border-2 border-zinc-200 border-t-yellow-400 rounded-full animate-spin"></div>
+                             <span className="text-xs font-medium tracking-wide text-zinc-400">LOADING PREVIEW...</span>
+                        </div>
+                    )}
+
                     <img 
                         src="./ext.png" 
                         alt="Banana Verse Extension Interface" 
-                        className="w-full h-auto object-cover"
+                        className={`w-full h-auto object-cover transition-opacity duration-700 ease-in-out ${imageLoaded ? 'opacity-100' : 'opacity-0'}`}
+                        onLoad={() => setImageLoaded(true)}
                         onError={(e) => {
-                            // Fallback placeholder if image fails to load
                             const target = e.target as HTMLImageElement;
                             target.onerror = null; 
-                            target.parentElement!.innerHTML = `<div class="flex flex-col items-center justify-center p-20 text-zinc-400 gap-4 text-center"><span class="text-5xl">🍌</span><span class="text-sm">Image Loading...</span></div>`;
+                            // Fallback content
+                            const parent = target.parentElement;
+                            if (parent) {
+                                parent.innerHTML = `
+                                <div class="flex flex-col items-center justify-center p-20 text-zinc-300 gap-3 text-center select-none">
+                                    <div class="text-5xl opacity-30 grayscale filter">🍌</div>
+                                    <span class="text-xs font-medium opacity-60">Preview not available</span>
+                                </div>`;
+                            }
                         }}
                     />
                 </div>
@@ -169,7 +197,7 @@ const App: React.FC = () => {
                 </div>
                 <div>
                   <div className="text-xs font-bold text-zinc-800">一键注入</div>
-                  <div className="text-[10px] text-zinc-400">ChatGPT Ready</div>
+                  <div className="text-[10px] text-zinc-400">Gemini Ready</div>
                 </div>
              </div>
 
@@ -197,7 +225,7 @@ const App: React.FC = () => {
 
            <div className="grid md:grid-cols-3 gap-8">
               {[
-                { icon: <Zap className="w-6 h-6 text-yellow-500" />, title: "闪电注入", desc: "告别复制粘贴。只需轻轻一点，Prompt 即可飞入 ChatGPT 输入框。" },
+                { icon: <Zap className="w-6 h-6 text-yellow-500" />, title: "闪电注入", desc: "告别复制粘贴。只需轻轻一点，Prompt 即可飞入 Gemini 输入框。" },
                 { icon: <Grid className="w-6 h-6 text-blue-500" />, title: "可视化管理", desc: "所见即所得。用精美的图片卡片管理你的 Prompt，而非枯燥的文字列表。" },
                 { icon: <Copy className="w-6 h-6 text-green-500" />, title: "一键复制", desc: "无论是复杂的参数还是简单的指令，精准复制，格式完美保留。" }
               ].map((feature, i) => (
@@ -288,7 +316,9 @@ const App: React.FC = () => {
                <span className="font-bold text-zinc-900">Banana Verse</span>
             </div>
             <div className="flex gap-6 text-sm text-zinc-500">
-               <a href="/privacy.html" className="hover:text-zinc-900 transition-colors">隐私政策</a>
+               <button onClick={() => setView('privacy')} className="hover:text-zinc-900 transition-colors text-left">
+                 隐私政策
+               </button>
                <a href="https://github.com/g1thubX/nano-banana-verse-tool" className="hover:text-zinc-900 transition-colors">GitHub</a>
             </div>
             <div className="text-xs text-zinc-400">

@@ -13,7 +13,7 @@
         "contextMenus"
     ],
     "host_permissions": [
-        "https://raw.githubusercontent.com/*"
+        "https://raw.githubusercontent.com/g1thubX/nano-banana-verse-tool/*"
     ],
     "action": {},
     "background": {
