@@ -1,54 +1,67 @@
+
 # 🍌 Banana Verse
 
-**Banana Verse** is the ultimate prompt management extension for AI creators. Designed with a "Banana" philosophy (Simple on the outside, rich on the inside), it seamlessly integrates with Google AI Studio and Gemini to streamline your workflow.
+**Banana Verse** —— 不仅仅是管理，更是灵感的 **核聚变** 引擎。专为 AI 创作者打造的终极视觉化提示词（Prompt）神器。
 
-![Banana Verse Preview](add-prompt.png)
-![Banana Verse Preview](app-pan.png)
+告别枯燥的文字列表，迎接 **所见即所得** 的创作新时代。无缝集成 Google AI Studio 和 Gemini，让你的工作流 **起飞**。
 
+![Banana Verse Preview](ext.png)
 
-## ✨ Features
+## 🔥 核心核能 (Features)
 
-*   **🚀 One-Click Injection**: Instantly insert complex prompts into AI Studio or Gemini input fields without copy-pasting.
-*   **🎨 Visual Gallery**: Manage your prompts with beautiful cards, visual previews, and tags instead of boring text lists.
-*   **📂 Organized Library**: Categorize prompts (Art, Code, Writing, etc.) for easy access.
-*   **📝 Custom Prompt Editor**: Create, edit, and save your own prompts with image previews.
-*   **❤️ Favorites**: Quickly access your most used prompts.
-*   **🔌 Multi-Platform Support**:
-    *   Google AI Studio
-    *   Gemini (Consumer)
-    *   Gemini (Business)
-*   **⚡ Flash Mode**: Special high-efficiency prompts for quick inspiration.
-*   **🔒 Privacy First**: All data is stored locally. Zero tracking.
+### 1. 🎨 一击入魂：视觉化注入
+**拒绝盲猜，所见即所得！**
+不再对着干瘪的文字发愁。浏览精美的预览图，**点击即中**，复杂的提示词瞬间“飞”入 AI 输入框。无需复制粘贴，灵感无缝衔接。
 
-## 📥 Installation
+### 2. 🌌 千罗万象：海量灵感库
+**上千款顶级效果，任你挑选！**
+内置庞大的提示词宝库，涵盖艺术设计、代码编程、创意写作等全领域。从赛博朋克到水墨丹青，从效率工具到角色扮演，只有想不到，没有找不到。
 
-1.  Download or clone this repository.
-2.  Open Chrome and go to `chrome://extensions/`.
-3.  Enable **Developer mode** (top right).
-4.  Click **Load unpacked**.
-5.  Select the `extension` folder from this project.
+### 3. ⚡️ 永不过时：全网实时脉动
+**紧跟潮流，每天都有新玩法！**
+插件具备强大的实时抓取能力，自动同步网络上 **最新、最热** 的提示词（Prompts）。让你的灵感库永远保持鲜活，永远快人一步。
 
-## 🎮 How to Use
+### 4. 🛠️ 掌控全场：大师级自定义
+**打造你的专属“军火库”！**
+不满足于现有库？你可以自由创建、编辑属于你的提示词。
+*   支持添加 **多张组图** 作为预览，全方位展示效果。
+*   随时预览、随时修改，精细打磨每一个字符，让 AI 更懂你。
 
-1.  **Open AI Studio or Gemini**: Navigate to `aistudio.google.com` or `gemini.google.com`.
-2.  **Look for the Banana**: You will see a floating 🍌 button near the input area or chat controls.
-3.  **Click to Open**: Click the button to open the Banana Verse modal.
-4.  **Select a Prompt**: Browse the gallery and click on a card to insert the prompt directly into the chat.
-5.  **Right-Click Magic**: You can also right-click in any text area and select "🍌 Insert Banana Prompts" to open the library.
+### 5. ❤️ 纯粹自由：开源免费
+**100% 开源，0% 套路！**
+我们相信最好的工具属于每一个人。无付费墙、无广告、无数据追踪。安全、透明、免费，只为极致体验。
 
-## 🛡️ Privacy
+---
 
-Banana Verse is designed to be private and secure:
-*   **Local Storage**: Your custom prompts and favorites are stored in your browser's local storage.
-*   **No Server**: We do not have a backend server. We do not collect your personal data or prompts.
-*   **Open Source**: The code is open for inspection.
+## 📥 极速安装
 
-For more details, please read our [Privacy Policy](privacy.html).
+1.  下载或克隆本仓库代码。
+2.  打开 Chrome 浏览器，访问 `chrome://extensions/`。
+3.  开启右上角的 **开发者模式 (Developer mode)**。
+4.  点击左上角的 **加载已解压的扩展程序 (Load unpacked)**。
+5.  选择本项目中的 `extension` 文件夹。
 
-## 🤝 Contributing
+## 🎮 使用指南
 
-Contributions are welcome! Please feel free to submit a Pull Request.
+1.  **启动**：打开 `aistudio.google.com` 或 `gemini.google.com`。
+2.  **发现**：你会看到输入框附近悬浮着一个 **🍌 (香蕉)** 按钮。
+3.  **探索**：点击按钮，打开 Banana Verse 灵感空间。
+4.  **注入**：浏览图库，点击你心仪的卡片，Prompt 立即就位。
+5.  **进阶**：在网页任何输入框 **右键**，选择 "🍌 Insert Banana Prompts"，随时随地调用你的灵感库。
 
-## 📄 License
+## 🛡️ 隐私承诺
 
-This project is licensed under the MIT License.
+我们如同捍卫自己的隐私一样捍卫您的隐私：
+*   **本地为王**：您的所有自定义 Prompt、收藏和设置均存储在您的浏览器本地 (Local Storage)。
+*   **绝无后门**：我们没有后端服务器，不收集、不上传、不分析您的任何个人数据。
+*   **代码透明**：开源代码，欢迎审阅。
+
+更多详情，请阅读 [隐私政策](privacy.html)。
+
+## 🤝 参与共建
+
+我们欢迎所有形式的贡献！无论是提交新的 Prompt、修复 Bug 还是提出新功能建议，请随时提交 Pull Request 或 Issue。
+
+## 📄 许可证
+
+本项目基于 MIT 许可证开源。
